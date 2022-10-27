@@ -29,8 +29,18 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world from Neer and $name from variable!
-
+        run: |
+         echo Hello, world from Neer and $name from variable!
+         echo Actor: ${{ github.actor }}
+         echo Committed by:: ${{ github.event.commits[0].author.name }}
+  
+  dump:
+    runs-on: ubuntu_latest
+    steps:
+      - env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      
      
   pull_request_only:
     # The type of runner that the job will run on
